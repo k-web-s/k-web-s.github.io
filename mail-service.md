@@ -55,6 +55,27 @@ That means, that instantly you can send a mail with a maximum of 60 recipients. 
 - For domain administrators: [postfixadmin](https://postfixadmin.srv.kwebs.cloud/)
 - For users: [postfixadmin user](https://postfixadmin.srv.kwebs.cloud/users/)
 
+## Required DNS Settings
+
+For `kwebs.cloud mail service` to be able to receive & send mails for a specific domain, the following entries must be present in the domain's zone:
+
+```
+; mx / for receiving mails
+@               IN      MX      0 mx.kwebs.cloud.
+
+; spf
+@               IN      TXT     "v=spf1 redirect=_spf.kwebs.cloud"
+
+; dkim
+s01._domainkey	IN      CNAME   s01._domainkey.kwebs.cloud.
+s02._domainkey	IN      CNAME   s02._domainkey.kwebs.cloud.
+s03._domainkey	IN      CNAME   s03._domainkey.kwebs.cloud.
+s04._domainkey	IN      CNAME   s04._domainkey.kwebs.cloud.
+
+; dmarc
+_dmarc          IN      CNAME   _dmarc.kwebs.cloud.
+```
+
 ## Used software components
 
 - https://github.com/kubernetize/postfix
